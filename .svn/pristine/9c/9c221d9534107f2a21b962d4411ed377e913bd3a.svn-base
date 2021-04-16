@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BaseProject.iml" filepath="$PROJECT_DIR$/.idea/modules/BaseProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BaseProject.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BaseProject.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-255144352/BaseProject.react-native-async-storage_async-storage.iml" filepath="$PROJECT_DIR$/.idea/modules/-255144352/BaseProject.react-native-async-storage_async-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1081951035/BaseProject.react-native-gesture-handler.iml" filepath="$PROJECT_DIR$/.idea/modules/1081951035/BaseProject.react-native-gesture-handler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-611656166/BaseProject.react-native-masked-view_masked-view.iml" filepath="$PROJECT_DIR$/.idea/modules/-611656166/BaseProject.react-native-masked-view_masked-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/169464474/BaseProject.react-native-pager-view.iml" filepath="$PROJECT_DIR$/.idea/modules/169464474/BaseProject.react-native-pager-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/420217290/BaseProject.react-native-picker_picker.iml" filepath="$PROJECT_DIR$/.idea/modules/420217290/BaseProject.react-native-picker_picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/676528641/BaseProject.react-native-reanimated.iml" filepath="$PROJECT_DIR$/.idea/modules/676528641/BaseProject.react-native-reanimated.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1024227556/BaseProject.react-native-safe-area-context.iml" filepath="$PROJECT_DIR$/.idea/modules/1024227556/BaseProject.react-native-safe-area-context.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-260381188/BaseProject.react-native-screens.iml" filepath="$PROJECT_DIR$/.idea/modules/-260381188/BaseProject.react-native-screens.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1925088167/BaseProject.react-native-svg.iml" filepath="$PROJECT_DIR$/.idea/modules/-1925088167/BaseProject.react-native-svg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1250939/BaseProject.react-native-vector-icons.iml" filepath="$PROJECT_DIR$/.idea/modules/1250939/BaseProject.react-native-vector-icons.iml" />
+    </modules>
+  </component>
+</project>
