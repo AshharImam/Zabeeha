@@ -16,6 +16,6 @@ OR
   react-native run-ios
 ```
 
-👉 It has basic navigation setup with all 3 navigations ( Stack, Drawer, Bottom Tab )
-👉 Basic Redux setup
-👉 User login state management and navigation setup
+👉 It has basic navigation setup with all 3 navigations ( Stack, Drawer, Bottom Tab ).
+👉 Basic Redux setup.
+👉 User login state management and navigation setup.
