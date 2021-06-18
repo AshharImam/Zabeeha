@@ -33,6 +33,7 @@ import {
 import {DrawerActions, useNavigation} from '@react-navigation/core';
 
 import {NavigationAction} from '@react-navigation/native';
+import {homeMadeApple} from '../Utils/fonts';
 
 export default DrawerContentComponent = props => {
   const user = useSelector(selectUser);
@@ -55,6 +56,7 @@ export default DrawerContentComponent = props => {
               color: colors.secondary,
               fontSize: fontSizeXLarge,
               marginVertical: 10,
+              fontFamily: homeMadeApple,
             }}>
             {user}
           </Text>

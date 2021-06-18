@@ -11,7 +11,7 @@ import {
 const AppTextInputComponent = ({placeholder, value, style, ...otherProps}) => {
   return (
     <View style={styles.container}>
-      <Text style={{color: colors.darkText, fontSize: fontSizeSmall}}>
+      <Text style={{color: colors.darkText, fontSize: fontSizeSmall * 0.95}}>
         {placeholder}
       </Text>
       <TextInput
@@ -32,11 +32,13 @@ const styles = StyleSheet.create({
   textInput: {
     width: '100%',
     color: colors.darkText,
-    backgroundColor: colors.grey,
+    backgroundColor: colors.secondary,
     borderRadius: 5,
     padding: Platform.OS === 'ios' ? screenHeight * 0.01 : screenHeight * 0.005,
     marginVertical: screenHeight * 0.002,
-    fontSize: fontSizeSmall * 1.2,
+    fontSize: fontSizeSmall * 1.4,
+    borderWidth: 1,
+    borderColor: colors.lightText + '2',
   },
   container: {
     marginVertical: screenHeight * 0.005,

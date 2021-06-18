@@ -18,6 +18,7 @@ import {
   screenHeight,
   fontSizeMedium,
 } from '../Utils/Dimensions';
+import {homeMadeApple, monoton} from '../Utils/fonts';
 
 const ProfileCardComponenet = () => {
   const user = useSelector(selectUser);
@@ -39,7 +40,11 @@ const ProfileCardComponenet = () => {
       ]}>
       <ProfilePhotoComponent image={profileImage} />
       <View style={styles.right}>
-        <Text style={{fontSize: fontSizeSmall, color: colors.white}}>
+        <Text
+          style={{
+            fontSize: fontSizeSmall,
+            color: colors.white,
+          }}>
           Welcome,
         </Text>
         <Text style={{fontSize: fontSizeXLarge, color: colors.white}}>

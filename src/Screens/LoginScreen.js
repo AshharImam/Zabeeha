@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  StatusBar,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {login, selectUser} from '../features/userSlice';
@@ -16,6 +18,7 @@ import colors from '../Utils/colors';
 
 import ScreenComponent from '../Components/ScreenComponent';
 import LoadingComponent from '../Components/LoadingComponent';
+import {homeMadeApple, monoton} from '../Utils/fonts';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -36,10 +39,40 @@ const Login = () => {
   if (isLoading) return <LoadingComponent />;
   return (
     <ScreenComponent>
+      <StatusBar
+        translucent
+        barStyle="dark-content"
+        backgroundColor={colors.touchUnderlay}
+      />
       <KeyboardAvoidingView style={styles.containerView} behavior="padding">
+        <Text style={styles.backgroundText}>
+          <Text>Base</Text>
+          <Text>Project</Text>
+        </Text>
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
-            <Text style={styles.logoText}>Recordnito</Text>
+            <Text
+              style={[
+                styles.logoText,
+                {
+                  marginTop: 50,
+                  marginRight: 70,
+                },
+              ]}>
+              Base
+            </Text>
+            <Text
+              style={[
+                styles.logoText,
+                {
+                  marginTop: -65,
+
+                  marginBottom: 30,
+                  marginLeft: 50,
+                },
+              ]}>
+              Project
+            </Text>
             <TextInput
               placeholder="Username"
               autoCorrect={false}
@@ -56,7 +89,11 @@ const Login = () => {
             />
 
             <TouchableOpacity style={styles.btn} onPress={loginHandler}>
-              <Text style={{color: colors.secondary, fontSize: fontSizeLarge}}>
+              <Text
+                style={{
+                  color: colors.secondary,
+                  fontSize: fontSizeLarge,
+                }}>
                 Login
               </Text>
             </TouchableOpacity>
@@ -77,12 +114,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logoText: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    marginTop: 150,
-    marginBottom: 30,
+    fontSize: 50,
+    // backgroundColor: colors.primary,
+    // fontWeight: 'bold',
+    // margin: 5,
     textAlign: 'center',
+
     color: colors.primary,
+    fontFamily: homeMadeApple,
   },
   loginFormView: {
     flex: 1,
@@ -102,8 +141,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   btn: {
-    backgroundColor: colors.primary,
+    borderRadius: 5,
 
+    backgroundColor: colors.primary,
     bottom: 20,
     width: '90%',
     marginVertical: 30,
@@ -111,5 +151,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
+  },
+  backgroundText: {
+    fontFamily: monoton,
+    position: 'absolute',
+    alignSelf: 'center',
+    transform: [
+      {
+        rotate: '-90deg',
+      },
+    ],
+    opacity: 0.5,
+    fontSize: 80,
+    width: '200%',
+    color: colors.grey,
+    elevation: -10,
+    top: 250,
+    flex: 1,
   },
 });
