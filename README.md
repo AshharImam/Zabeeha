@@ -1,5 +1,6 @@
 # BaseProject
-A project with basic setup for ⚛ **ReactNative** with navigations, redux, asyncstorage and many more.
+A project with basic setup for ⚛ **ReactNative0.64.0** with navigations, redux, asyncstorage and many more.
+
 
 ### To get started:
 ```
