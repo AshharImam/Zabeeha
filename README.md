@@ -1,5 +1,5 @@
 # BaseProject
-A project with basic setup for ⚛ *ReactNative* with navigations, redux, asyncstorage and many more.
+A project with basic setup for ⚛ **ReactNative** with navigations, redux, asyncstorage and many more.
 
 ### To get started:
 ```
@@ -7,7 +7,7 @@ A project with basic setup for ⚛ *ReactNative* with navigations, redux, asyncs
   react-native link
   cd ios && pod install
 ```
-then remove input and output files from * [CP] Copy Pod Resource * in XCODE. then,
+then remove input and output files from **[CP] Copy Pod Resource** in XCODE. then,
 ```
   react-native run-android
 ```
