@@ -19,7 +19,7 @@ OR
 
 👉 It has basic navigation setup with all 3 navigations ( Stack, Drawer, Bottom Tab ).\
 👉 Basic Redux setup.\
-👉 User login state management and navigation setup.\
+👉 User login state management and navigation setup.
 ### Screenshots 👇
 ![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/1.png).
 ![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/2.png).
