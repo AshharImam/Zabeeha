@@ -20,5 +20,8 @@ OR
 👉 Basic Redux setup.\
 👉 User login state management and navigation setup.\
 ### Screenshots 👇
-![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/1.png)![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/2.png)![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/3.png)![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/4.png)
+![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/1.png)  
+![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/2.png)  
+![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/3.png)  
+![Login Screen](https://github.com/AshharImam/BaseProject/blob/master/screenshots/4.png)  
 
