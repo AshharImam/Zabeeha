@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -9,164 +9,175 @@ import {
   TouchableOpacity,
   View,
   StatusBar,
+  Image,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {login, selectUser} from '../features/userSlice';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-import {fontSizeLarge, screenHeight} from '../Utils/Dimensions';
+import {getData, login, selectUser} from '../features/userSlice';
+
+import {fontSizeLarge, fontSizeMedium, screenHeight} from '../Utils/Dimensions';
 import colors from '../Utils/colors';
 
 import ScreenComponent from '../Components/ScreenComponent';
 import LoadingComponent from '../Components/LoadingComponent';
-import {homeMadeApple, monoton} from '../Utils/fonts';
+import AppTextInputComponent from '../Components/AppTextInputComponent';
+import LogoComponent from '../Components/LogoComponent';
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import AppPrimaryButtonComponent from '../Components/AppPrimaryButtonComponent';
+import AppTextComponent from '../Components/AppTextComponent';
+import {useNavigation} from '@react-navigation/native';
+import AppButtonComponent from '../Components/AppButtonComponent';
+import {selectError, setError} from '../features/errorSlice';
+import {validatePhoneNumber} from '../Utils/validationMethod';
+import {signinAPI} from '../Axios/axios';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState('');
-  const userSelectorUser = useSelector(selectUser);
-  const [isLoading, setIsLoading] = useState(true);
+  const error = useSelector(selectError);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation();
+
+  // phone number
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const phoneNumberRef = useRef();
+  // password
+  const [password, setPassword] = useState('');
+  const passwordRef = useRef();
+
+  // handle login
   const loginHandler = () => {
-    Keyboard.dismiss();
-    dispatch(login(user));
+    if (!validatePhoneNumber(phoneNumber)) {
+      handleError('phoneNumber', 'Invalid Phone Number');
+      phoneNumberRef.current.focus();
+    } else if (password.length < 6) {
+      handleError('password', 'Invalid Password');
+      passwordRef.current.focus();
+    } else {
+      signinUser();
+    }
   };
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
 
-  console.log('USER REDUX', userSelectorUser);
-  if (isLoading) return <LoadingComponent />;
+  // calling API and signing in
+  const signinUser = async () => {
+    setIsLoading(true);
+    await signinAPI(phoneNumber, password)
+      .then(response => {
+        dispatch(login(response));
+        dispatch(getData(response.id));
+      })
+      .catch(e => {
+        handleError('', e.message);
+        setIsLoading(false);
+      });
+  };
+
+  // handling error for validations
+  const handleError = (type, message) => {
+    dispatch(
+      setError({
+        origin: type,
+        message: message,
+      }),
+    );
+  };
+
   return (
-    <ScreenComponent>
-      <StatusBar
-        translucent
-        barStyle="dark-content"
-        backgroundColor={colors.touchUnderlay}
-      />
-      <KeyboardAvoidingView style={styles.containerView} behavior="padding">
-        <Text style={styles.backgroundText}>
-          <Text>Base</Text>
-          <Text>Project</Text>
-        </Text>
-        <View style={styles.loginScreenContainer}>
-          <View style={styles.loginFormView}>
-            <Text
-              style={[
-                styles.logoText,
-                {
-                  marginTop: 50,
-                  marginRight: 70,
-                },
-              ]}>
-              Base
-            </Text>
-            <Text
-              style={[
-                styles.logoText,
-                {
-                  marginTop: -65,
-
-                  marginBottom: 30,
-                  marginLeft: 50,
-                },
-              ]}>
-              Project
-            </Text>
-            <TextInput
-              placeholder="Username"
-              autoCorrect={false}
-              autoCompleteType="off"
-              placeholderColor={colors.black}
-              style={styles.loginFormTextInput}
-              onChangeText={text => setUser(text)}
-            />
-            <TextInput
-              placeholder="Password"
-              placeholderColor={colors.black}
-              style={styles.loginFormTextInput}
-              secureTextEntry={true}
-            />
-
-            <TouchableOpacity style={styles.btn} onPress={loginHandler}>
-              <Text
-                style={{
-                  color: colors.secondary,
-                  fontSize: fontSizeLarge,
-                }}>
-                Login
-              </Text>
-            </TouchableOpacity>
-          </View>
+    <ScreenComponent
+      color={colors.primary}
+      statusBarContentStyle="light-content">
+      <KeyboardAwareScrollView>
+        <LogoComponent
+          style={{
+            alignSelf: 'center',
+          }}
+        />
+        <View
+          style={{
+            paddingHorizontal: responsiveWidth(5),
+          }}>
+          <AppTextInputComponent
+            placeholder="Phone Number"
+            keyboardType="phone-pad"
+            returnKeyType="next"
+            value={phoneNumber}
+            onChangeText={text => setPhoneNumber(text)}
+            blurOnSubmit={false}
+            onSubmitEditing={() => passwordRef.current.focus()}
+            error={error?.origin == 'phoneNumber'}
+            textInputRef={phoneNumberRef}
+            icon={() => (
+              <Fontisto
+                name="mobile"
+                color={
+                  error?.origin == 'phoneNumber' ? colors.red : colors.white
+                }
+                size={fontSizeMedium}
+              />
+            )}
+          />
+          <AppTextInputComponent
+            placeholder="Password"
+            error={error?.origin == 'password'}
+            keyboardType="default"
+            returnKeyType="done"
+            value={password}
+            secureTextEntry
+            onChangeText={text => setPassword(text)}
+            blurOnSubmit={true}
+            onSubmitEditing={loginHandler}
+            textInputRef={passwordRef}
+            icon={() => (
+              <FontAwesome5
+                name="lock"
+                color={error?.origin == 'password' ? colors.red : colors.white}
+                size={fontSizeMedium}
+              />
+            )}
+          />
+          <AppButtonComponent
+            title="SIGN IN"
+            onPress={loginHandler}
+            isLoading={isLoading}
+            disable={isLoading}
+            style={{
+              marginVertical: responsiveHeight(2),
+            }}
+          />
         </View>
-      </KeyboardAvoidingView>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <AppTextComponent style={{color: colors.white}}>
+            Not registered yet?{' '}
+          </AppTextComponent>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SignupScreen')}
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: colors.red,
+            }}>
+            <AppTextComponent
+              style={{
+                color: colors.red,
+              }}>
+              SIGNUP
+            </AppTextComponent>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAwareScrollView>
     </ScreenComponent>
   );
 };
 
 export default Login;
 
-const styles = StyleSheet.create({
-  containerView: {
-    flex: 1,
-  },
-  loginScreenContainer: {
-    flex: 1,
-  },
-  logoText: {
-    fontSize: 50,
-    // backgroundColor: colors.primary,
-    // fontWeight: 'bold',
-    // margin: 5,
-    textAlign: 'center',
-
-    color: colors.primary,
-    fontFamily: homeMadeApple,
-  },
-  loginFormView: {
-    flex: 1,
-  },
-  loginFormTextInput: {
-    height: 43,
-    fontSize: 14,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#eaeaea',
-    backgroundColor: '#fafafa',
-    color: colors.black,
-    paddingLeft: 10,
-    marginLeft: 15,
-    marginRight: 15,
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  btn: {
-    borderRadius: 5,
-
-    backgroundColor: colors.primary,
-    bottom: 20,
-    width: '90%',
-    marginVertical: 30,
-    height: screenHeight * 0.05,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-  },
-  backgroundText: {
-    fontFamily: monoton,
-    position: 'absolute',
-    alignSelf: 'center',
-    transform: [
-      {
-        rotate: '-90deg',
-      },
-    ],
-    opacity: 0.5,
-    fontSize: 80,
-    width: '200%',
-    color: colors.grey,
-    elevation: -10,
-    top: 250,
-    flex: 1,
-  },
-});
+const styles = StyleSheet.create({});

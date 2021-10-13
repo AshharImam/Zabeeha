@@ -6,8 +6,15 @@ import {
   SafeAreaView,
   Platform,
 } from 'react-native';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import Entypo from 'react-native-vector-icons/Entypo';
 import colors from '../Utils/colors';
-import {fontSizeSmall, screenHeight} from '../Utils/Dimensions';
+import {fontSizeLarge, fontSizeSmall, screenHeight} from '../Utils/Dimensions';
+import CartComponent from './CartComponent';
 
 const TabBarContentComponent = ({state, descriptors, navigation}) => {
   return (
@@ -15,78 +22,89 @@ const TabBarContentComponent = ({state, descriptors, navigation}) => {
       <View
         style={{
           flexDirection: 'row',
-          //   height: screenHeight * 0.05,
-          justifyContent: 'center',
-          alignItems: 'flex-end',
-          backgroundColor: colors.primary,
-          paddingBottom:
-            Platform.OS === 'ios' ? screenHeight * 0.03 : screenHeight * 0.02,
-          paddingTop:
-            Platform.OS === 'ios' ? screenHeight * 0.01 : screenHeight * 0.01,
+          // alignItems: 'center',
+          // justifyContent: 'center',
         }}>
-        {state.routes.map((route, index) => {
-          const {options} = descriptors[route.key];
-          const label =
-            options.tabBarLabel !== undefined
-              ? options.tabBarLabel
-              : options.title !== undefined
-              ? options.title
-              : route.name;
-          const icon = options.tabBarIcon;
+        <View
+          style={{
+            flexDirection: 'row',
+            //   height: screenHeight * 0.05,
+            width: '60%',
+            alignSelf: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.greyLightest,
+            marginHorizontal: responsiveWidth(4),
+            height: responsiveHeight(8),
+            // paddingBottom: responsiveHeight(2),
+            // paddingTop: responsiveHeight(2),
 
-          const isFocused = state.index === index;
+            borderRadius: responsiveFontSize(3),
+          }}>
+          {[0, 1, 2].map((_, index) => {
+            const route = state.routes[index];
+            const {options} = descriptors[route.key];
+            const label =
+              options.tabBarLabel !== undefined
+                ? options.tabBarLabel
+                : options.title !== undefined
+                ? options.title
+                : route.name;
+            const icon = options.tabBarIcon;
 
-          const onPress = () => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
+            const isFocused = state.index === index;
 
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
-          };
+            const onPress = () => {
+              const event = navigation.emit({
+                type: 'tabPress',
+                target: route.key,
+                canPreventDefault: true,
+              });
 
-          const onLongPress = () => {
-            navigation.emit({
-              type: 'tabLongPress',
-              target: route.key,
-            });
-          };
+              if (!isFocused && !event.defaultPrevented) {
+                navigation.navigate(route.name);
+              }
+            };
 
-          return (
-            <TouchableOpacity
-              key={index}
-              accessibilityRole="button"
-              accessibilityState={isFocused ? {selected: true} : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
-              onPress={onPress}
-              onLongPress={onLongPress}
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              {icon({
-                color: colors.secondary,
-                focused: isFocused,
-                route: route,
-                options: {
-                  onPress: onPress,
-                },
-              })}
-              {/* <Text
+            const onLongPress = () => {
+              navigation.emit({
+                type: 'tabLongPress',
+                target: route.key,
+              });
+            };
+
+            return (
+              <TouchableOpacity
+                key={index}
+                accessibilityRole="button"
+                accessibilityState={isFocused ? {selected: true} : {}}
+                accessibilityLabel={options.tabBarAccessibilityLabel}
+                testID={options.tabBarTestID}
+                onPress={onPress}
+                onLongPress={onLongPress}
                 style={{
-                  color: isFocused ? '#673ab7' : '#222',
-                  fontSize: fontSizeSmall,
+                  width: responsiveWidth(20),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: isFocused
+                    ? colors.greyLightest
+                    : colors.greyLightest,
+                  borderRadius: responsiveFontSize(2),
+                  height: '70%',
                 }}>
-                {label} here
-              </Text> */}
-            </TouchableOpacity>
-          );
-        })}
+                {icon({
+                  color: colors.grey,
+                  focused: isFocused,
+                  route: route,
+                  options: {
+                    onPress: onPress,
+                  },
+                })}
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+        <CartComponent />
       </View>
     </SafeAreaView>
   );

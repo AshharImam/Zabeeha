@@ -1,0 +1,6 @@
+module Pods_Zabeeha_ZabeehaTests {
+  umbrella header "Pods-Zabeeha-ZabeehaTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,20 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {selectUser} from '../features/userSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectLoading, selectUser, setLoading} from '../features/userSlice';
 
 import LoadingComponent from '../Components/LoadingComponent';
-import DrawerNavigation from './DrawerNavigation';
 import LoginNavigation from './LoginNavigation';
-import ProfileScreenNavigation from './ProfileScreenNavigation';
 import MainStackNavigation from './MainStackNavigation';
+import ErrorComponent from '../Components/ErrorComponent';
+import {selectError, setError} from '../features/errorSlice';
+import {Modal, View} from 'react-native';
+import colors from '../Utils/colors';
 
 const StartNavigation = () => {
   const user = useSelector(selectUser);
-  const [loading, setLoading] = useState(true);
+  const error = useSelector(selectError);
+  const loading = useSelector(selectLoading);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      dispatch(setLoading(false));
     }, 1000);
   }, []);
 
@@ -24,6 +29,18 @@ const StartNavigation = () => {
       {user ? <MainStackNavigation /> : <LoginNavigation />}
 
       {/* {user ? <DrawerNavigation /> : <LoginNavigation />} */}
+      <ErrorComponent
+        error={error?.message ? error?.message : error}
+        isLoading={true}
+        setIsLoading={() => {}}
+        setError={error => {
+          dispatch(setError(error));
+        }}
+      />
+
+      <Modal visible={loading} animationType="slide">
+        <LoadingComponent />
+      </Modal>
     </NavigationContainer>
   );
 };

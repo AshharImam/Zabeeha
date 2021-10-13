@@ -12,32 +12,24 @@ import {
 import colors from '../Utils/colors';
 import {screenHeight} from '../Utils/Dimensions';
 
-const ScreenComponent = ({children, style}) => {
+const ScreenComponent = ({
+  children,
+  style,
+  color = colors.white,
+  statusBarContentStyle = 'light-content',
+}) => {
   return (
-    <View style={{flex: 1}}>
-      <StatusBar
-        barStyle={Platform.OS === 'ios' ? 'light-content' : 'default'}
-        backgroundColor={colors.primary}
-      />
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        {/* <SafeAreaView style={{flex: 1}}> */}
-        <View style={[styles.screen, styles]}>{children}</View>
-        {/* </SafeAreaView> */}
-      </TouchableWithoutFeedback>
+    <View style={{flex: 1, backgroundColor: color}}>
+      <StatusBar barStyle={statusBarContentStyle} backgroundColor={color} />
+      <SafeAreaView style={{flex: 1, backgroundColor: color}}>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          {/* <SafeAreaView style={{flex: 1}}> */}
+          <View style={[{flex: 1}, style]}>{children}</View>
+          {/* </SafeAreaView> */}
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
     </View>
   );
 };
 
 export default ScreenComponent;
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    // paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-    // padding: 10,
-    // backgroundColor: 'rgb(230,230,230)',
-    height: screenHeight,
-    backgroundColor: colors.secondary,
-    padding: 10,
-  },
-});

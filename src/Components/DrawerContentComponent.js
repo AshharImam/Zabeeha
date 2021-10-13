@@ -5,35 +5,42 @@ import {
 } from '@react-navigation/drawer';
 import React from 'react';
 import {
-  Button,
-  Dimensions,
   Image,
-  ImageBackground,
-  Platform,
   SafeAreaView,
-  ScrollView,
   Text,
   TouchableHighlight,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import ProfilePhotoComponent from './ProfilePhotoComponent';
-import ScreenComponent from './ScreenComponent';
-import profileImage from '../Assets/images/profile.png';
 import {logout, selectUser} from '../features/userSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import colors from '../Utils/colors';
 import {
   fontSizeLarge,
   fontSizeMedium,
+  fontSizeSmall,
   fontSizeXLarge,
+  screenHeight,
   screenWidth,
 } from '../Utils/Dimensions';
 import {DrawerActions, useNavigation} from '@react-navigation/core';
 
+import icon from '../Assets/images/icon.png';
+
+import Entypo from 'react-native-vector-icons/Entypo';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+
 import {NavigationAction} from '@react-navigation/native';
 import {homeMadeApple} from '../Utils/fonts';
+import AppTextComponent from './AppTextComponent';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import LogoComponent from './LogoComponent';
+import deviceInfoModule from 'react-native-device-info';
 
 export default DrawerContentComponent = props => {
   const user = useSelector(selectUser);
@@ -48,139 +55,171 @@ export default DrawerContentComponent = props => {
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: 20,
           }}>
-          <ProfilePhotoComponent image={profileImage} />
-          <Text
-            style={{
-              color: colors.secondary,
-              fontSize: fontSizeXLarge,
-              marginVertical: 10,
-              fontFamily: homeMadeApple,
-            }}>
-            {user}
-          </Text>
-          <Text
-            style={{
-              color: colors.secondary,
-              fontSize: fontSizeMedium,
-              fontWeight: '500',
-            }}>
-            Balance: <Text style={{fontSize: fontSizeLarge}}>2,000</Text>
-          </Text>
+          <LogoComponent />
         </View>
 
         <DrawerContentScrollView>
           <TouchableHighlight
             style={{
-              padding: 10,
-              margin: 8,
+              padding: screenHeight * 0.01,
+              margin: screenHeight * 0.008,
               borderRadius: 3,
-              // backgroundColor:
-              //   props.navigation.state.routeName === 'Dashboard'
-              //     ? colors.secondary
-              //     : colors.primary,
             }}
             onPress={() => {
               props.navigation.dispatch(DrawerActions.closeDrawer());
-
-              props.navigation.navigate('Dashboard');
+              props.navigation.navigate('PersonalProfileScreen');
             }}
             underlayColor={colors.primary}>
-            <Text
+            <View
               style={{
-                color: colors.secondary,
-                // marginLeft: 18,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}>
-              Dashboard
-            </Text>
+              <Ionicons
+                name="ios-person-outline"
+                color={colors.white}
+                size={fontSizeMedium}
+              />
+
+              <AppTextComponent
+                style={{
+                  color: colors.white,
+                  textAlign: 'left',
+                  flexDirection: 'row',
+                }}>
+                {'   '}
+                Profile
+                {'   '}
+              </AppTextComponent>
+            </View>
           </TouchableHighlight>
           <TouchableHighlight
-            style={{padding: 10, margin: 8, borderRadius: 3}}
+            style={{
+              padding: screenHeight * 0.01,
+              margin: screenHeight * 0.008,
+              borderRadius: 3,
+            }}
             onPress={() => {
               props.navigation.dispatch(DrawerActions.closeDrawer());
-
-              props.navigation.navigate('Notifications');
+              props.navigation.navigate('ContactUsScreen');
             }}
             underlayColor={colors.primary}>
-            <Text
+            <View
               style={{
-                color: colors.secondary,
-                // marginLeft: 18,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}>
-              Notifications
-            </Text>
+              <AntDesign
+                name="phone"
+                color={colors.white}
+                size={fontSizeMedium}
+              />
+
+              <AppTextComponent
+                style={{
+                  color: colors.white,
+                  textAlign: 'left',
+                  flexDirection: 'row',
+                }}>
+                {'   '}
+                Contact Us
+                {'   '}
+              </AppTextComponent>
+            </View>
           </TouchableHighlight>
           <TouchableHighlight
-            style={{padding: 10, margin: 8, borderRadius: 3}}
+            style={{
+              padding: screenHeight * 0.01,
+              margin: screenHeight * 0.008,
+              borderRadius: 3,
+            }}
             onPress={() => {
               props.navigation.dispatch(DrawerActions.closeDrawer());
-
-              props.navigation.navigate('QR Code');
+              props.navigation.navigate('AboutUsScreen');
             }}
             underlayColor={colors.primary}>
-            <Text
+            <View
               style={{
-                color: colors.secondary,
-                // marginLeft: 18,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}>
-              QR Code
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={{padding: 10, margin: 8, borderRadius: 3}}
-            onPress={() => {
-              props.navigation.dispatch(DrawerActions.closeDrawer());
-              props.navigation.navigate('Transactions');
-            }}
-            underlayColor={colors.primary}>
-            <Text
-              style={{
-                color: colors.secondary,
-                // marginLeft: 18,
-              }}>
-              Transactions
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={{padding: 10, margin: 8, borderRadius: 3}}
-            onPress={() => {
-              props.navigation.dispatch(DrawerActions.closeDrawer());
+              <Image
+                source={require('../Assets/images/zabeeha_silhouette.png')}
+                style={{
+                  width: fontSizeMedium,
+                  height: fontSizeMedium,
+                  resizeMode: 'contain',
+                }}
+              />
 
-              props.navigation.navigate('Profile');
-            }}
-            underlayColor={colors.primary}>
-            <Text
-              style={{
-                color: colors.secondary,
-                // marginLeft: 18,
-              }}>
-              Profile
-            </Text>
+              <AppTextComponent
+                style={{
+                  color: colors.white,
+                  textAlign: 'left',
+                  flexDirection: 'row',
+                }}>
+                {'   '}
+                About Us
+                {'   '}
+              </AppTextComponent>
+            </View>
           </TouchableHighlight>
-
           <TouchableHighlight
-            style={{padding: 10, margin: 8, borderRadius: 3}}
+            style={{
+              padding: screenHeight * 0.01,
+              margin: screenHeight * 0.008,
+              borderRadius: 3,
+            }}
             onPress={() => {
-              // props.navigation.dispatch(DrawerActions.closeDrawer());
-              // props.navigation.reset({
-              //   index: 0,
-              //   routes: [{name: 'Home'}],
-              // });
               setTimeout(() => {
                 dispatch(logout());
               }, 100);
             }}
             underlayColor={colors.primary}>
-            <Text
+            <View
               style={{
-                color: colors.secondary,
-                // marginLeft: 18,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}>
-              Logout
-            </Text>
+              <SimpleLineIcons
+                name="logout"
+                color={colors.white}
+                size={fontSizeMedium}
+              />
+
+              <AppTextComponent
+                style={{
+                  color: colors.white,
+                  textAlign: 'left',
+                  flexDirection: 'row',
+                }}>
+                {'   '}
+                Logout
+                {'   '}
+              </AppTextComponent>
+            </View>
           </TouchableHighlight>
         </DrawerContentScrollView>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            opacity: 0.4,
+          }}>
+          <AppTextComponent
+            style={{
+              fontSize: fontSizeSmall,
+            }}>
+            Powered by Makglobal
+          </AppTextComponent>
+          <AppTextComponent
+            style={{
+              fontSize: fontSizeSmall,
+            }}>
+            v{deviceInfoModule.getVersion()}
+          </AppTextComponent>
+        </View>
       </View>
     </SafeAreaView>
 

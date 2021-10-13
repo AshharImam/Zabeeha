@@ -3,10 +3,12 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'BaseProject' do
+target 'Zabeeha' do
   config = use_native_modules!
 
   permissions_path = '../node_modules/react-native-permissions/ios'
+  rn_maps_path = '../node_modules/react-native-maps'
+
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -15,9 +17,11 @@ target 'BaseProject' do
   )
 
 
+  pod 'react-native-google-maps', :path => rn_maps_path
+
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
 
-  target 'BaseProjectTests' do
+  target 'ZabeehaTests' do
     inherit! :complete
     # Pods for testing
   end

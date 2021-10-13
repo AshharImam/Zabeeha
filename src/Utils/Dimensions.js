@@ -1,9 +1,9 @@
 import {Dimensions, Platform} from 'react-native';
+import {responsiveFontSize} from 'react-native-responsive-dimensions';
 
 export const screenWidth = Dimensions.get('screen').width;
 export const screenHeight = Dimensions.get('screen').height;
-export const fontSizeSmall =
-  Platform.OS === 'android' ? screenHeight * 0.016 : screenHeight * 0.015;
-export const fontSizeMedium = screenHeight * 0.02;
-export const fontSizeLarge = screenHeight * 0.024;
-export const fontSizeXLarge = screenHeight * 0.03;
+export const fontSizeSmall = responsiveFontSize(1.4);
+export const fontSizeMedium = responsiveFontSize(2);
+export const fontSizeLarge = responsiveFontSize(2.4);
+export const fontSizeXLarge = responsiveFontSize(3);
