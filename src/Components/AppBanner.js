@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {SliderBox} from 'react-native-image-slider-box';
 import {
   responsiveHeight,
@@ -17,6 +18,7 @@ const AppBanner = ({images = []}) => {
       disableOnPress
       imageLoadingColor={colors.red}
       sliderBoxHeight={responsiveHeight(25)}
+      ImageComponent={FastImage}
     />
   );
 };

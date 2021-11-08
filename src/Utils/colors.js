@@ -59,4 +59,10 @@ export default {
   greenLight: '#66bb6a',
   greenLighter: '#81c784',
   greenLightest: '#a5d6a7',
+
+  // pending: '#9ea7ad',
+  pending: '#FFB630',
+  processing: '#2dccff',
+  completed: '#56f000',
+  cancelled: '#ff3838',
 };

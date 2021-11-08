@@ -31,6 +31,7 @@ const StartNavigation = () => {
       {/* {user ? <DrawerNavigation /> : <LoginNavigation />} */}
       <ErrorComponent
         error={error?.message ? error?.message : error}
+        type={error?.type ? error?.type : ''}
         isLoading={true}
         setIsLoading={() => {}}
         setError={error => {

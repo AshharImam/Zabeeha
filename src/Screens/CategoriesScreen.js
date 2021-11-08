@@ -103,7 +103,8 @@ const CategoriesScreen = ({route}) => {
 
       {productLoading && <LoadingComponent />}
       {productList && (
-        <ScrollView>
+        <ScrollView
+          contentContainerStyle={{paddingBottom: responsiveHeight(8)}}>
           <View
             style={{
               flex: 1,

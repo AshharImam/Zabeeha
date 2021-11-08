@@ -31,6 +31,7 @@ const AppButtonComponent = ({
         styles.btn,
         {
           backgroundColor: color,
+          overflow: 'hidden',
         },
         secondary && {
           backgroundColor: '#0000',
@@ -59,7 +60,7 @@ const AppButtonComponent = ({
           <View
             style={{
               width: '100%',
-              height: '100%',
+              height: '130%',
               position: 'absolute',
               top: 0,
               left: 0,
@@ -84,7 +85,7 @@ export default AppButtonComponent;
 
 const styles = StyleSheet.create({
   btn: {
-    height: responsiveHeight(5),
+    minHeight: responsiveHeight(5),
     backgroundColor: colors.redDarkest,
     alignItems: 'center',
     justifyContent: 'center',

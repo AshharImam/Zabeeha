@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {
   responsiveHeight,
   responsiveWidth,
@@ -23,6 +24,7 @@ const LogoComponent = ({
         style,
       ]}
     />
+    // <View></View>
   );
 };
 

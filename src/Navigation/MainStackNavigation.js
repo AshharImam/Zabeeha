@@ -23,12 +23,14 @@ import ConfirmOrderScreen from '../Screens/ConfirmOrderScreen';
 import OrderDetailScreen from '../Screens/OrderDetailScreen';
 import ContactUsScreen from '../Screens/ContactUsScreen';
 import AboutUsScreen from '../Screens/AboutUsScreen';
+import AddNewAddressScreen from '../Screens/AddNewAddressScreen';
 
 const Stack = createStackNavigator();
 
 const MainStackNavigation = () => (
   <>
     <Stack.Navigator
+      mode="modal"
       screenOptions={{
         headerBackImage: () => (
           <Ionicons
@@ -85,6 +87,14 @@ const MainStackNavigation = () => (
         component={AddressScreen}
         options={{
           title: 'Select Address',
+        }}
+      />
+      <Stack.Screen
+        name="AddNewAddress"
+        component={AddNewAddressScreen}
+        options={{
+          title: 'Add New Address',
+          cardOverlayEnabled: true,
         }}
       />
       <Stack.Screen

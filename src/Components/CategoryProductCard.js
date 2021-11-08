@@ -16,6 +16,7 @@ const CategoryProductCard = ({
   onPress,
   width = responsiveWidth(35),
   height = responsiveHeight(18),
+  // height = 150,
   color = colors.redDarkest,
 }) => {
   return (
@@ -33,7 +34,7 @@ const CategoryProductCard = ({
         style={{
           width: width + responsiveFontSize(2),
 
-          // height: height,
+          height: height,
         }}>
         <Image
           source={image}
@@ -50,13 +51,15 @@ const CategoryProductCard = ({
             backgroundColor: colors.white + 'd',
             width: '100%',
             bottom: 0,
-            height: responsiveHeight(6),
+            height: 70,
             flexDirection: 'row',
             borderBottomLeftRadius: responsiveFontSize(1),
             borderBottomRightRadius: responsiveFontSize(1),
             padding: responsiveFontSize(1),
           }}>
           <AppTextComponent
+            numberOfLines={2}
+            allowFontScaling={false}
             style={{
               color: colors.black,
             }}>
@@ -70,7 +73,8 @@ const CategoryProductCard = ({
               position: 'absolute',
               right: responsiveFontSize(1),
               bottom: responsiveHeight(0.5),
-            }}>
+            }}
+            allowFontScaling={false}>
             RS.{' '}
             <AppTextComponent
               style={{fontSize: fontSizeMedium, color: colors.black}}>

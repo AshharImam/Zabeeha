@@ -44,7 +44,7 @@ export const addressSlice = createSlice({
   },
   extraReducers: {
     [getAddresses.fulfilled]: (state, {payload}) => {
-      state.addresses = payload;
+      state.addresses = payload.reverse();
       state.addressLoading = false;
     },
     [getAddresses.pending]: state => {

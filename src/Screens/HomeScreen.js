@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, Image, StyleSheet, View} from 'react-native';
 import ScreenComponent from '../Components/ScreenComponent';
 import {useDispatch, useSelector} from 'react-redux';
@@ -14,14 +14,22 @@ import CategoryCard from '../Components/CategoryCard';
 import {imageUrl} from '../Axios/axios';
 import ProductCard from '../Components/ProductCard';
 import {useNavigation} from '@react-navigation/native';
+import {useNavigationState} from '@react-navigation/core';
 import CartComponent from '../Components/CartComponent';
 import {selectHomeData, selectUser} from '../features/userSlice';
+import {getOrders} from '../features/orderSlice';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const homeData = useSelector(selectHomeData);
+  const user = useSelector(selectUser);
+  const navigationState = useNavigationState(state => state);
 
+  useEffect(() => {
+    dispatch(getOrders(user.id));
+  }, []);
+  // console.warn(navigationState);
   return (
     <ScreenComponent color={colors.primary}>
       <AppBanner

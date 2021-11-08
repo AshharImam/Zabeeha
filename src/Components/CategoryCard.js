@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -19,14 +20,31 @@ import AppTextComponent from './AppTextComponent';
 const CategoryCard = ({title, image, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <ImageBackground
+      <View
+        style={{
+          width: responsiveWidth(35),
+          height: responsiveHeight(8),
+          marginHorizontal: responsiveWidth(3),
+        }}>
+        <Image
+          source={image}
+          resizeMode="cover"
+          style={{
+            width: responsiveWidth(35),
+            height: responsiveHeight(8),
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
+        />
+        {/* <ImageBackground
         source={image}
         resizeMode="cover"
         style={{
           width: responsiveWidth(35),
           height: responsiveHeight(8),
           marginHorizontal: responsiveWidth(3),
-        }}>
+        }}> */}
         <View
           style={{
             width: '100%',
@@ -36,7 +54,8 @@ const CategoryCard = ({title, image, onPress}) => {
           }}>
           <AppTextComponent style={styles.heading}>{title}</AppTextComponent>
         </View>
-      </ImageBackground>
+        {/* </ImageBackground> */}
+      </View>
     </TouchableOpacity>
   );
 };

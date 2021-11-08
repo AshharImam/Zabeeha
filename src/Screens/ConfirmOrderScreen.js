@@ -4,6 +4,7 @@ import {
   Button,
   FlatList,
   Image,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -75,20 +76,16 @@ const ConfirmOrderScreen = ({route}) => {
                     {key: 'HomeScreen-XnGEe8cBG2B22Cz94ifbe', type: 'route'},
                     {key: 'OrdersScreen-V8TPMYIrQ8RCqW736U7h0', type: 'route'},
                   ],
-                  index: 2,
+                  index: 1,
                   key: 'tab-DBsSgp7lj1ZmTGMtjWpZH',
-                  routeNames: ['HomeScreen', 'ShopsScreen', 'OrdersScreen'],
+                  routeNames: ['HomeScreen', 'OrdersScreen'],
                   routes: [
                     {
                       key: 'HomeScreen-XnGEe8cBG2B22Cz94ifbe',
                       name: 'HomeScreen',
                       params: undefined,
                     },
-                    {
-                      key: 'ShopsScreen-vuUg1ita9c6y1tVcygTyB',
-                      name: 'ShopsScreen',
-                      params: undefined,
-                    },
+
                     {
                       key: 'OrdersScreen-V8TPMYIrQ8RCqW736U7h0',
                       name: 'OrdersScreen',
@@ -275,36 +272,6 @@ const ConfirmOrderScreen = ({route}) => {
               marginHorizontal: responsiveFontSize(4),
               marginVertical: responsiveFontSize(2),
             }}></View>
-          <View>
-            <View
-              style={{
-                marginHorizontal: responsiveFontSize(4),
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: responsiveHeight(0.5),
-              }}>
-              <AppTextComponent style={{color: colors.greyLight}}>
-                Subtotal
-              </AppTextComponent>
-              <AppTextComponent style={{color: colors.greyLight}}>
-                Rs. {cart.reduce(calculateTotal, 0).toFixed(2)}
-              </AppTextComponent>
-            </View>
-            <View
-              style={{
-                marginHorizontal: responsiveFontSize(4),
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingVertical: responsiveHeight(0.5),
-              }}>
-              <AppTextComponent style={{color: colors.greyLight}}>
-                Delivery fee
-              </AppTextComponent>
-              <AppTextComponent style={{color: colors.greyLight}}>
-                Rs. 0.00
-              </AppTextComponent>
-            </View>
-          </View>
         </View>
       </ScrollView>
 
@@ -313,9 +280,8 @@ const ConfirmOrderScreen = ({route}) => {
           style={{
             position: 'absolute',
             width: '100%',
-            paddingHorizontal: responsiveWidth(3),
             alignSelf: 'center',
-            bottom: responsiveHeight(5),
+            bottom: 0,
             backgroundColor: colors.primary,
             elevation: 10,
             shadowColor: colors.greyDarkest,
@@ -326,18 +292,48 @@ const ConfirmOrderScreen = ({route}) => {
               height: -1,
             },
           }}>
-          <View style={styles.textContainer}>
-            <AppTextComponent style={styles.total}>Total</AppTextComponent>
-            <AppTextComponent style={styles.total}>
-              Rs. {cart.reduce(calculateTotal, 0).toFixed(2)}
-            </AppTextComponent>
+          <View
+            style={{
+              paddingVertical: responsiveHeight(0.5),
+            }}>
+            <View style={styles.textContainer}>
+              <AppTextComponent style={{color: colors.greyLight}}>
+                Subtotal
+              </AppTextComponent>
+              <AppTextComponent style={{color: colors.greyLight}}>
+                Rs. {cart.reduce(calculateTotal, 0).toFixed(2)}
+              </AppTextComponent>
+            </View>
+            <View style={styles.textContainer}>
+              <AppTextComponent style={{color: colors.greyLight}}>
+                Delivery fee
+              </AppTextComponent>
+              <AppTextComponent style={{color: colors.greyLight}}>
+                Rs. 0.00
+              </AppTextComponent>
+            </View>
+            <View style={styles.textContainer}>
+              <AppTextComponent style={styles.total}>Total</AppTextComponent>
+              <AppTextComponent style={styles.total}>
+                Rs. {cart.reduce(calculateTotal, 0).toFixed(2)}
+              </AppTextComponent>
+            </View>
           </View>
           <AppButtonComponent
             style={{
               width: '100%',
+              justifyContent: Platform.OS == 'ios' ? 'flex-start' : 'center',
+              paddingTop: Platform.OS == 'ios' ? 15 : 0,
+              borderRadius: 0,
+              height:
+                Platform.OS == 'ios'
+                  ? responsiveHeight(9)
+                  : responsiveHeight(8),
             }}
             isLoading={orderLoading === 'pending'}
             disable={orderLoading === 'pending'}
+            // isLoading={true}
+            // disable={true}
             title="Checkout"
             onPress={handleCheckout}
           />
@@ -356,7 +352,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: responsiveHeight(1),
+    // paddingVertical: responsiveHeight(0.5),
+    paddingHorizontal: responsiveWidth(3),
   },
   subTotal: {
     fontSize: fontSizeLarge,

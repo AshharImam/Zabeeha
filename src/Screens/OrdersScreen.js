@@ -27,6 +27,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {fontSizeLarge, fontSizeSmall} from '../Utils/Dimensions';
+import {Badge} from 'react-native-paper';
 
 const OrderComponent = ({item}) => {
   const navigation = useNavigation();
@@ -61,15 +62,22 @@ const OrderComponent = ({item}) => {
               borderRadius: 10,
               backgroundColor:
                 item.status == 'pending'
-                  ? colors.subtleOrange
-                  : colors.greenDark,
+                  ? colors.pending
+                  : item.status == 'completed'
+                  ? colors.completed
+                  : item.status == 'cancelled'
+                  ? colors.cancelled
+                  : item.status == 'processing'
+                  ? colors.processing
+                  : colors.white,
               alignItems: 'center',
               justifyContent: 'center',
-              width: responsiveWidth(20),
+              width: responsiveFontSize(12),
+              padding: responsiveFontSize(0.5),
             }}>
             <AppTextComponent
               style={{
-                fontSize: responsiveFontSize(1.7),
+                fontSize: responsiveFontSize(1.5),
 
                 textAlign: 'center',
                 color: colors.primary,
@@ -118,7 +126,7 @@ const OrdersScreen = () => {
 
   useEffect(() => {
     navigation.addListener('state', navigationState => {
-      if (navigationState.data.state.index == 2) {
+      if (navigationState.data.state.index == 1) {
         dispatch(getOrders(user.id));
       }
     });

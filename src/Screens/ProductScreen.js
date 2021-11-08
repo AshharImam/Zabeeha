@@ -1,5 +1,13 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -12,6 +20,8 @@ import AppTextComponent from '../Components/AppTextComponent';
 import CartComponent from '../Components/CartComponent';
 import ScreenComponent from '../Components/ScreenComponent';
 import {addToCart, removeFromCart, selectCart} from '../features/cartSlice';
+import {setError} from '../features/errorSlice';
+import {selectOrders} from '../features/orderSlice';
 import colors from '../Utils/colors';
 import {
   fontSizeLarge,
@@ -19,13 +29,20 @@ import {
   fontSizeSmall,
   fontSizeXLarge,
 } from '../Utils/Dimensions';
+import {openSans} from '../Utils/fonts';
 
 const ProductScreen = ({route}) => {
   const item = route.params.item;
   const dispatch = useDispatch();
   const cart = useSelector(selectCart);
 
+  const orders = useSelector(selectOrders);
+  console.warn(item);
   const handleOnPressAddToCartButton = () => {
+    if (orders?.length > 0 && orders[0]?.status?.toLowerCase() == 'pending') {
+      dispatch(setError('Wait for your pending orders to be completed'));
+      return;
+    }
     const index = cart.findIndex(product => product.id == item.id);
     if (index > -1) {
       dispatch(removeFromCart({id: item.id}));
@@ -34,9 +51,13 @@ const ProductScreen = ({route}) => {
     }
   };
   return (
-    <ScreenComponent
+    <View
       color={colors.primary}
-      style={{paddingHorizontal: responsiveWidth(5)}}>
+      style={{
+        paddingHorizontal: responsiveWidth(5),
+        backgroundColor: colors.primary,
+        flex: 1,
+      }}>
       <Image
         source={{uri: imageUrl + item.image}}
         style={{
@@ -75,33 +96,65 @@ const ProductScreen = ({route}) => {
           {JSON.stringify(item)}
         </AppTextComponent> */}
       </View>
-      <View></View>
+      {/* <View></View> */}
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'space-around',
           position: 'absolute',
           bottom: 0,
           alignSelf: 'center',
           width: responsiveWidth(100),
-          paddingHorizontal: responsiveWidth(4),
+          // paddingHorizontal: responsiveWidth(4),
+          backgroundColor: colors.grey,
+          height:
+            Platform.OS == 'ios' ? responsiveHeight(9) : responsiveHeight(8),
         }}>
-        <AddToCartButtonComponent
-          relative
-          title={(() => {
-            const index = cart.findIndex(product => product.id == item.id);
-            if (index > -1) {
-              return 'Remove From Cart';
-            }
-            return 'Add To Cart';
-          })()}
-          width={60}
+        <TouchableOpacity
           onPress={handleOnPressAddToCartButton}
+          style={{
+            width: responsiveWidth(70),
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: Platform.OS == 'ios' ? 'flex-start' : 'center',
+            paddingTop: Platform.OS == 'ios' ? 15 : 0,
+            backgroundColor: colors.redDarkest,
+            borderRightColor: colors.white + '6',
+            borderRightWidth: 1,
+          }}>
+          <AppTextComponent
+            style={{
+              color: colors.white,
+              fontWeight: '600',
+              fontSize: responsiveFontSize(2.5),
+            }}
+            allowFontScaling={false}>
+            {(() => {
+              const index = cart.findIndex(product => product.id == item.id);
+              if (index > -1) {
+                return 'Remove From Cart';
+              }
+              return 'Add To Cart';
+            })()}
+          </AppTextComponent>
+        </TouchableOpacity>
+
+        <CartComponent
+          style={{
+            width: responsiveWidth(30),
+            height: '100%',
+            borderRadius: 0,
+            backgroundColor: colors.redDarkest,
+            justifyContent: Platform.OS == 'ios' ? 'flex-start' : 'center',
+            paddingTop: Platform.OS == 'ios' ? 10 : 0,
+          }}
+          relative
+          color={colors.white}
+          badgeColor={colors.greyDark}
         />
-        <CartComponent relative />
       </View>
-    </ScreenComponent>
+    </View>
   );
 };
 

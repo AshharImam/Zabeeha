@@ -1,5 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -16,6 +17,7 @@ const ProductCard = ({
   onPress,
   width = responsiveWidth(35),
   height = responsiveHeight(18),
+  // height = 150,
   color = colors.redDarkest,
 }) => {
   return (
@@ -43,7 +45,9 @@ const ProductCard = ({
             borderRadius: responsiveFontSize(1),
           }}
         />
-        <AppTextComponent>{title}</AppTextComponent>
+        <AppTextComponent numberOfLines={2} allowFontScaling={false}>
+          {title}
+        </AppTextComponent>
         <AppTextComponent
           style={{
             fontSize: fontSizeSmall,
@@ -51,7 +55,8 @@ const ProductCard = ({
             position: 'absolute',
             right: 0,
             bottom: 0,
-          }}>
+          }}
+          allowFontScaling={false}>
           RS.{' '}
           <AppTextComponent style={{fontSize: fontSizeMedium}}>
             {price}

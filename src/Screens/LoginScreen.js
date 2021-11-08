@@ -26,6 +26,7 @@ import LoadingComponent from '../Components/LoadingComponent';
 import AppTextInputComponent from '../Components/AppTextInputComponent';
 import LogoComponent from '../Components/LogoComponent';
 import {
+  responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
@@ -36,6 +37,7 @@ import AppButtonComponent from '../Components/AppButtonComponent';
 import {selectError, setError} from '../features/errorSlice';
 import {validatePhoneNumber} from '../Utils/validationMethod';
 import {signinAPI} from '../Axios/axios';
+import {getOrders} from '../features/orderSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -96,10 +98,13 @@ const Login = () => {
           style={{
             alignSelf: 'center',
           }}
+          width={200}
+          height={200}
         />
         <View
           style={{
             paddingHorizontal: responsiveWidth(5),
+            marginTop: responsiveHeight(10),
           }}>
           <AppTextInputComponent
             placeholder="Phone Number"

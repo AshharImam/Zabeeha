@@ -22,9 +22,13 @@ import {
   screenHeight,
   screenWidth,
 } from '../Utils/Dimensions';
-import {DrawerActions, useNavigation} from '@react-navigation/core';
+import {
+  DrawerActions,
+  useNavigation,
+  useNavigationState,
+} from '@react-navigation/core';
 
-import icon from '../Assets/images/icon.png';
+// import icon from '../Assets/images/icon.png';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -41,9 +45,10 @@ import {
 } from 'react-native-responsive-dimensions';
 import LogoComponent from './LogoComponent';
 import deviceInfoModule from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
+import {emptyCart} from '../features/cartSlice';
 
 export default DrawerContentComponent = props => {
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   return (
     // <ScreenComponent>
@@ -56,10 +61,44 @@ export default DrawerContentComponent = props => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <LogoComponent />
+          <LogoComponent width={200} height={200} />
         </View>
 
         <DrawerContentScrollView>
+          <TouchableHighlight
+            style={{
+              padding: screenHeight * 0.01,
+              margin: screenHeight * 0.008,
+              borderRadius: 3,
+            }}
+            onPress={() => {
+              props.navigation.dispatch(DrawerActions.closeDrawer());
+              props.navigation.navigate('HomeScreen');
+            }}
+            underlayColor={colors.primary}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Ionicons
+                name="ios-person-outline"
+                color={colors.white}
+                size={fontSizeMedium}
+              />
+
+              <AppTextComponent
+                style={{
+                  color: colors.white,
+                  textAlign: 'left',
+                  flexDirection: 'row',
+                }}>
+                {'   '}
+                Home
+                {'   '}
+              </AppTextComponent>
+            </View>
+          </TouchableHighlight>
           <TouchableHighlight
             style={{
               padding: screenHeight * 0.01,
@@ -172,6 +211,7 @@ export default DrawerContentComponent = props => {
               borderRadius: 3,
             }}
             onPress={() => {
+              dispatch(emptyCart());
               setTimeout(() => {
                 dispatch(logout());
               }, 100);

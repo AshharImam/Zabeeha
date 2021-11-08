@@ -13,7 +13,14 @@ import colors from '../Utils/colors';
 import {fontSizeSmall} from '../Utils/Dimensions';
 import AppTextComponent from './AppTextComponent';
 
-const CartComponent = ({relative = false}) => {
+const CartComponent = ({
+  relative = false,
+  height = responsiveHeight(8),
+  style,
+  color = colors.grey,
+  badgeColor = colors.redDarkest,
+  badgeTextColor = colors.greyLightest,
+}) => {
   const navigation = useNavigation();
   const cart = useSelector(selectCart);
 
@@ -32,32 +39,34 @@ const CartComponent = ({relative = false}) => {
           justifyContent: 'center',
           backgroundColor: colors.greyLightest,
           borderRadius: responsiveFontSize(3),
-          height: responsiveHeight(8),
+          height: height,
         },
         !relative && {
           position: 'absolute',
           bottom: 1,
           right: responsiveWidth(4),
         },
+        style,
       ]}>
       <>
         <View
           style={{
-            borderRadius: 100,
+            // borderRadius: 100,
             // padding: 5,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
           <SimpleLineIcons
             name="basket"
-            color={colors.grey}
+            // color={}
+            color={color}
             size={responsiveHeight(3.5)}
           />
         </View>
         {cart.length > 0 && (
           <View
             style={{
-              backgroundColor: colors.redDarkest,
+              backgroundColor: badgeColor,
               position: 'absolute',
               // padding: responsiveFontSize(0.7),
               borderRadius: responsiveFontSize(2),
@@ -70,7 +79,7 @@ const CartComponent = ({relative = false}) => {
             }}>
             <AppTextComponent
               style={{
-                color: colors.greyLightest,
+                color: badgeTextColor,
                 fontSize: fontSizeSmall,
                 fontWeight: 'bold',
                 textAlign: 'center',

@@ -273,3 +273,26 @@ export const updateProfileAPI = async (
     throw new Error(error.message);
   }
 };
+export const cancelOrderAPI = async orderId => {
+  try {
+    let response;
+
+    await instance
+      .post('cancelorder.php', {
+        oid: orderId,
+      })
+      .then(res => {
+        response = res.data;
+      })
+      .catch(e => {
+        throw new Error(e.message);
+      });
+    if (response.ResponseCode == '200') {
+      return response.ResponseMsg;
+    } else {
+      throw new Error(response.ResponseMsg);
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};

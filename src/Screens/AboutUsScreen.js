@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {
   responsiveHeight,
   responsiveWidth,
@@ -36,6 +37,8 @@ const AboutUsScreen = () => {
           style={{
             alignSelf: 'center',
           }}
+          width={200}
+          height={200}
         />
         <AppTextComponent
           style={{
@@ -107,15 +110,15 @@ const AboutUsScreen = () => {
         }}>
         <Image
           style={{width: 75, height: 75, margin: 10}}
-          source={require('../Assets/images/Cer1.png')}
+          source={require('./../Assets/images/Cer1.png')}
         />
         <Image
           style={{width: 75, height: 85, margin: 10}}
-          source={require('../Assets/images/Cer9.png')}
+          source={require('./../Assets/images/Cer9.png')}
         />
         <Image
           style={{width: 75, height: 75, margin: 10}}
-          source={require('../Assets/images/Cer2.png')}
+          source={require('./../Assets/images/Cer2.png')}
         />
       </View>
       <View
@@ -127,11 +130,11 @@ const AboutUsScreen = () => {
         }}>
         <Image
           style={{width: 75, height: 75, margin: 10}}
-          source={require('../Assets/images/Cer3.png')}
+          source={require('./../Assets/images/Cer3.png')}
         />
         <Image
           style={{width: 75, height: 75, margin: 10}}
-          source={require('../Assets/images/Cer4.png')}
+          source={require('./../Assets/images/Cer4.png')}
         />
         <Image
           style={{width: 75, height: 75, margin: 10}}
@@ -148,7 +151,7 @@ const AboutUsScreen = () => {
           style={{width: 75, height: 75, margin: 10}}
           source={require('../Assets/images/Cer7.png')}
         />
-        <Image
+        <FastImage
           style={{width: 75, height: 75, margin: 10}}
           source={require('../Assets/images/Cer8.png')}
         />

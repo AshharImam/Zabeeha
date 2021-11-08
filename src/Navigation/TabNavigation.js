@@ -74,7 +74,7 @@ const TabNavigation = () => {
           title: '',
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="ShopsScreen"
         component={ShopsScreen}
         options={() => ({
@@ -96,7 +96,7 @@ const TabNavigation = () => {
           ),
           title: 'Shops',
         })}
-      />
+      /> */}
       <Tab.Screen
         name="OrdersScreen"
         component={OrdersScreen}
@@ -117,7 +117,7 @@ const TabNavigation = () => {
               />
             </View>
           ),
-          title: 'Past Orders',
+          title: 'Orders History',
         })}
       />
 

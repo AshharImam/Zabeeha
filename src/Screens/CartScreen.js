@@ -4,6 +4,7 @@ import {
   Button,
   FlatList,
   Image,
+  Platform,
   StyleSheet,
   Text,
   View,
@@ -28,13 +29,18 @@ import {
   subtractFromCart,
 } from '../features/cartSlice';
 import colors from '../Utils/colors';
-import {fontSizeLarge} from '../Utils/Dimensions';
+import {fontSizeLarge, fontSizeMedium} from '../Utils/Dimensions';
 import {CommonActions, useNavigation} from '@react-navigation/native';
+import {selectHomeData} from '../features/userSlice';
+import {selectOrders} from '../features/orderSlice';
+import {openSans} from '../Utils/fonts';
 
 const CartScreen = () => {
   const cart = useSelector(selectCart);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const homeData = useSelector(selectHomeData);
+  const orders = useSelector(selectOrders);
 
   const addButtonPress = id => {
     dispatch(addToCart({id: id, quantity: 0.5}));
@@ -87,7 +93,10 @@ const CartScreen = () => {
                     {
                       name: 'DrawerNavigation',
                     },
-                    {name: 'CategoriesScreen'},
+                    {
+                      name: 'CategoriesScreen',
+                      params: {id: homeData?.Catlist[0]?.id},
+                    },
                   ],
                 }),
               );
@@ -122,24 +131,9 @@ const CartScreen = () => {
         ItemSeparatorComponent={() => (
           <View style={{height: 1, backgroundColor: colors.white + '2'}} />
         )}
-        ListFooterComponent={() =>
-          cart.length > 0 && (
-            <View>
-              <View style={styles.textContainer}>
-                <AppTextComponent style={styles.subTotal}>
-                  Subtotal
-                </AppTextComponent>
-                <AppTextComponent style={styles.subTotal}>
-                  Rs. {cart.reduce(calculateTotal, 0).toFixed(2)}
-                </AppTextComponent>
-              </View>
-              <View style={styles.textContainer}>
-                <AppTextComponent>Delivery Fee</AppTextComponent>
-                <AppTextComponent>Rs. 0.00</AppTextComponent>
-              </View>
-            </View>
-          )
-        }
+        // ListFooterComponent={() =>
+
+        // }
       />
 
       {cart.length > 0 && (
@@ -147,9 +141,9 @@ const CartScreen = () => {
           style={{
             position: 'absolute',
             width: '100%',
-            paddingHorizontal: responsiveWidth(3),
             alignSelf: 'center',
-            bottom: responsiveHeight(5),
+            // bottom: responsiveHeight(5),
+            bottom: 0,
             backgroundColor: colors.primary,
             elevation: 10,
             shadowColor: colors.greyDarkest,
@@ -160,15 +154,45 @@ const CartScreen = () => {
               height: -1,
             },
           }}>
-          <View style={styles.textContainer}>
-            <AppTextComponent style={styles.total}>Total</AppTextComponent>
-            <AppTextComponent style={styles.total}>
-              Rs. {cart.reduce(calculateTotal, 0).toFixed(2)}
-            </AppTextComponent>
+          <View
+            style={{
+              paddingVertical: responsiveHeight(1),
+            }}>
+            <View style={styles.textContainer}>
+              <AppTextComponent style={styles.subTotal}>
+                Subtotal
+              </AppTextComponent>
+              <AppTextComponent style={styles.subTotal}>
+                Rs. {cart.reduce(calculateTotal, 0).toFixed(2)}
+              </AppTextComponent>
+            </View>
+            <View style={styles.textContainer}>
+              <AppTextComponent style={styles.subTotal}>
+                Delivery Fee
+              </AppTextComponent>
+              <AppTextComponent style={styles.subTotal}>
+                Rs. 0.00
+              </AppTextComponent>
+            </View>
+            <View style={styles.textContainer}>
+              <AppTextComponent style={styles.total}>Total</AppTextComponent>
+              <AppTextComponent style={styles.total}>
+                Rs. {cart.reduce(calculateTotal, 0).toFixed(2)}
+              </AppTextComponent>
+            </View>
           </View>
+
           <AppButtonComponent
             style={{
               width: '100%',
+              padding: responsiveFontSize(1),
+              justifyContent: Platform.OS == 'ios' ? 'flex-start' : 'center',
+              paddingTop: Platform.OS == 'ios' ? 15 : 0,
+              borderRadius: 0,
+              height:
+                Platform.OS == 'ios'
+                  ? responsiveHeight(9)
+                  : responsiveHeight(8),
             }}
             title="Proceed To Checkout"
             onPress={() => navigation.navigate('AddressScreen')}
@@ -188,11 +212,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: responsiveHeight(1),
+    // paddingVertical: responsiveHeight(1),
+    paddingHorizontal: responsiveWidth(3),
   },
   subTotal: {
-    fontSize: fontSizeLarge,
+    // fontSize: responsiveFontSize(1.8),
     fontWeight: '500',
+    color: colors.greyLight,
   },
   total: {
     fontSize: fontSizeLarge,

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Animated, Platform, StyleSheet, Text, View} from 'react-native';
 import {
+  responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
@@ -8,7 +9,7 @@ import colors from '../Utils/colors';
 import {fontSizeLarge, fontSizeMedium} from '../Utils/Dimensions';
 import AppTextComponent from './AppTextComponent';
 
-const ErrorComponent = ({error, setError, isLoading, setIsLoading}) => {
+const ErrorComponent = ({error, setError, isLoading, setIsLoading, type}) => {
   const animatedError = useState(new Animated.Value(-100))[0];
 
   useEffect(() => {
@@ -30,31 +31,38 @@ const ErrorComponent = ({error, setError, isLoading, setIsLoading}) => {
         duration: 500,
         useNativeDriver: true,
       }).start();
-    }, 2500);
+    }, 3500);
     setTimeout(() => {
       setError('');
-    }, 3000);
+    }, 4000);
     setIsLoading(false);
   };
 
   return error ? (
     <Animated.View
-      style={{
-        transform: [{translateY: animatedError}],
-        top: 0,
-        position: 'absolute',
-        alignSelf: 'center',
-        width: responsiveWidth(100),
-        paddingTop: Platform.OS == 'ios' ? responsiveHeight(3.2) : 0,
-        backgroundColor: colors.red,
-        justifyContent: 'flex-end',
-      }}>
+      style={[
+        {
+          transform: [{translateY: animatedError}],
+          top: 0,
+          position: 'absolute',
+          alignSelf: 'center',
+          width: responsiveWidth(100),
+          paddingTop: Platform.OS == 'ios' ? responsiveHeight(3.2) : 0,
+          backgroundColor: type == 'm' ? colors.white : colors.red,
+          justifyContent: 'flex-end',
+        },
+        type == 'm' &&
+          {
+            // borderWidth: 1,
+            // borderColor: colors.redDarkest,
+          },
+      ]}>
       <AppTextComponent
         style={{
-          color: colors.white,
-
+          color: type == 'm' ? colors.black : colors.white,
+          marginVertical: responsiveHeight(1),
           fontWeight: '600',
-          fontSize: fontSizeMedium,
+          fontSize: responsiveFontSize(2.4),
           textAlign: 'center',
           padding: responsiveHeight(1),
         }}>
